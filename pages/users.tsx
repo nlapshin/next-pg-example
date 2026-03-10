@@ -59,8 +59,38 @@ export default function Home({
   return (
     <div className="container">
       <main>
-        <h2>Hello</h2>
-        <a href="/users">Users</a>
+        {isConnected ? (
+          <h2 className="subtitle">You are connected to PostgreSQL</h2>
+        ) : (
+          <h2 className="subtitle">
+            You are NOT connected to PostgreSQL. Check the <code>README.md</code>{" "}
+            for instructions.
+          </h2>
+        )}
+
+        <div className="grid">
+          <div className="card">
+              <h3>Users({usersCount})</h3>
+              <table className="user-table">
+                <thead>
+                  <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Posts</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map((user) => (
+                    <tr key={user._id}>
+                      <td>{user.username}</td>
+                      <td>{user.email}</td>
+                      <td>{user.posts.map(post => post.title).join(', ')}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+        </div>
       </main>
 
       <style jsx>{`
